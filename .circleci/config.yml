@@ -77,8 +77,7 @@ workflows:
         type: approval
         filters:
           tags:
-            only:
-            - /qa-.*/
+            only: /^qa-.*/
 
     - deploy-to-qa:
         requires:
