@@ -75,9 +75,6 @@ workflows:
     jobs:
     - confirm-deploy-qa:
         type: approval
-        requires:
-        - build
-        - run-integration-tests
         filters:
           tags:
             only:
@@ -86,10 +83,8 @@ workflows:
     - deploy-to-qa:
         requires:
         - confirm-deploy-qa
-        filters:
-          tags:
-            only:
-            - /qa-.*/
+
+
 
   ci:
     jobs:
