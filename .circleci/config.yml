@@ -1,11 +1,11 @@
 version: 2
     
 commands:
-  docker-pull:
+  docker_pull:
     steps:
     - run: echo "Pulling docker image"
 
-  deploy-to-kubernetes:
+  deploy_to_kubernetes:
     steps:
     - run: echo "Deploying to Kubernetes"
 
@@ -24,8 +24,8 @@ jobs:
     docker:
     - image: circleci/python:3.6
     steps:
-    - docker-pull
-    - deploy-to-kubernetes
+    - docker_pull
+    - deploy_to_kubernetes
     - run: echo "Run Integration tests"
 
   qa:
