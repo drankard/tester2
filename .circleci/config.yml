@@ -75,11 +75,11 @@ workflows:
         - deploy-to-ci
     - confirm_deploy_qa:
         type: approval
-          requires:
-          - build
-          filters:
-            branches:
-              only: master
+        requires:
+        - build
+        filters:
+          branches:
+            only: master
 
     - deploy_qa:
         requires:
