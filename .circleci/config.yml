@@ -78,30 +78,6 @@ workflows:
     - run-integration-tests:
         requires:
         - deploy-to-ci
-    - confirm-deploy-qa:
-        type: approval
-        requires:
-        - build
-        filters:
-          branches:
-            only: master
-
-    - deploy-to-qa:
-        requires:
-        - confirm-deploy-qa
-        filters:
-          branches:
-            only: master
-
-    - confirm-qa-ok:
-        type: approval
-        requires:
-        - build
-        - deploy-to-qa
-        filters:
-          branches:
-            only: master
-
     - confirm-deploy-staging:
         type: approval
         requires:
@@ -110,4 +86,28 @@ workflows:
         filters:
           branches:
             only: master
+  qa:
+    jobs:
+    - confirm-deploy-qa:
+        type: approval
+        requires:
+        - build
+        filters:
+          tags:
+            only: /^qa-testing.*/
 
+    - deploy-to-qa:
+        requires:
+        - confirm-deploy-qa
+        filters:
+          tags:
+            only: /^qa-testing.*/
+
+    - confirm-qa-ok:
+        type: approval
+        requires:
+        - build
+        - deploy-to-qa
+        filters:
+          tags:
+            only: /^qa-testing.*/
