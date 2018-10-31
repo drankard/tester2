@@ -71,6 +71,5 @@ workflows:
         requires:
         - test
     - run-qa:
-       requires:
-       - deploy-to-qa
-    - 
+        requires:
+        - deploy-to-qa
