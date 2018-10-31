@@ -66,10 +66,14 @@ workflows:
     - test:
         requires:
         - build
-    - deploy-to-qa:
+    - execute-qa-deployment:
         type: approval
         requires:
         - test
     - run-qa:
         requires:
         - deploy-to-qa
+    - approve-qa-tests:
+        type: approval
+        requires:
+        - run-qa
