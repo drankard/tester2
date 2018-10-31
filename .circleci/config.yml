@@ -64,8 +64,8 @@ workflows:
     - test:
         requires:
         - build
-   - qa:
-       type: approval
-       requires:
+    - qa:
+        type: approval
+        requires:
         - test
 
