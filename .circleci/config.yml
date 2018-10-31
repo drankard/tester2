@@ -81,14 +81,14 @@ workflows:
 
     - confirm-deploy-qa:
         type: approval
+        requires:
+        - build
+        - run-integration-tests
         filters:
           tags:
             only: /^qa.*/
           branches:
-            ignore: master
-        requires:
-        - build
-        - run-integration-tests
+            only: master
 
     - deploy-to-qa:
         requires:
@@ -97,7 +97,8 @@ workflows:
           tags:
             only: /^qa.*/
           branches:
-            ignore: master
+            only: master
+
     - run-automated-qa-tests:
         requires:
         - deploy-to-qa
@@ -105,7 +106,7 @@ workflows:
           tags:
             only: /^qa.*/
           branches:
-            ignore: master
+            only: master
 
     - confirm-qa-ok:
         type: approval
@@ -115,13 +116,15 @@ workflows:
           tags:
             only: /^qa.*/
           branches:
-            ignore: master
+            only: master
 
     - confirm-deploy-staging:
         type: approval
         filters:
           tags:
             only: /^staging.*/
+          branches:
+            only: master
         requires:
         - build
         - confirm-qa-ok
