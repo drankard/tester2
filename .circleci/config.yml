@@ -83,7 +83,7 @@ workflows:
         type: approval
         filters:
           tags:
-            only: /^qa-testing.*/
+            only: /^qa.*/
         requires:
         - build
         - run-integration-tests
@@ -93,7 +93,13 @@ workflows:
         - confirm-deploy-qa
         filters:
           tags:
-            only: /^qa-testing.*/
+            only: /^qa.*/
+    - run-automated-qa-tests:
+        requires:
+        - deploy-to-qa
+        filters:
+          tags:
+            only: /^qa.*/
 
     - confirm-qa-ok:
         type: approval
@@ -101,4 +107,15 @@ workflows:
         - deploy-to-qa
         filters:
           tags:
-            only: /^qa-testing.*/
+            only: /^qa.*/
+
+    - confirm-deploy-staging:
+        type: approval
+        filters:
+          tags:
+            only: /^staging.*/
+        requires:
+        - build
+        - confirm-qa-ok
+        - run-automated-qa-tests
+
