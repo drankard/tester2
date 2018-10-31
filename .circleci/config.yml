@@ -42,7 +42,7 @@ jobs:
     executor: python-executor
     steps:
     - docker-pull
-    - deploy-to-kubernetes:
+    - deploy-to-kubernetes
 
   run-automated-qa-tests:
     executor: python-executor
