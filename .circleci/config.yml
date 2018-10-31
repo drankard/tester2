@@ -78,13 +78,15 @@ workflows:
     - run-integration-tests:
         requires:
         - deploy-to-ci
-  qa:
-    jobs:
+
     - confirm-deploy-qa:
         type: approval
         filters:
           tags:
             only: /^qa-testing.*/
+        requires:
+        - build
+        - run-integration-tests
 
     - deploy-to-qa:
         requires:
