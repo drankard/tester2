@@ -73,3 +73,17 @@ workflows:
     - run-integration-tests:
         requires:
         - deploy-to-ci
+    - confirm_deploy_qa:
+        type: approval
+          requires:
+          - build
+          filters:
+            branches:
+              only: master
+
+    - deploy_qa:
+        requires:
+        - confirm_deploy_qa
+        filters:
+          branches:
+            only: master
