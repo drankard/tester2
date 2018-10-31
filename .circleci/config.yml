@@ -72,4 +72,4 @@ workflows:
         - build
     - run-integration-tests:
         requires:
-        - run-integration-tests
+        - deploy-to-ci
