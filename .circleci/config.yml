@@ -67,10 +67,4 @@ workflows:
         requires: build
     - run-qa:
         requires: test
-    - approve-qa:
-        type: approval
-        requires: run-qa
-    - deploy-to-staging:
-        requires: approve-qa
-
 
