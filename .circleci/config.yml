@@ -25,6 +25,7 @@ jobs:
     - run: echo "Building docker Image...."
     - run: echo "Running Component tests..."
     - run: echo "pushing docker image to ECS..."
+
   test:
     executor: python-executor
     steps:
@@ -32,13 +33,16 @@ jobs:
     - deploy_to_kubernetes
     - run: echo "Run Integration tests"
 
-  qa:
+  run-qa:
     executor: python-executor
     steps:
     - docker-pull
     - deploy-to-kubernetes
     - run: echo "Run Automated QA Tests"
     - run: echo "Run Manual QA Tests"
+
+  approve-qa:
+    requires: qa
 
   staging:
     executor: python-executor
@@ -62,10 +66,16 @@ workflows:
     jobs:
     - build
     - test:
-        requires:
-        - build
-    - qa:
-        type: approval
-        requires:
-        - test
+        requires: build
 
+    - run-qa:
+        type: approval
+        requires: test
+
+    - qa-approval:
+        type: approval
+        requires: run-qa
+
+    - deploy-to-staging:
+        type: approval
+        requires: qa-approval
