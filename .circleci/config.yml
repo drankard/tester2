@@ -92,3 +92,22 @@ workflows:
         filters:
           branches:
             only: master
+
+    - confirm-qa-ok:
+        type: approval
+        requires:
+        - build
+        - deploy-to-qa
+        filters:
+          branches:
+            only: master
+
+    - confirm-deploy-staging:
+        type: approval
+        requires:
+        - build
+        - confirm-qa-ok
+        filters:
+          branches:
+            only: master
+
