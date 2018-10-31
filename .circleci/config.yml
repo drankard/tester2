@@ -20,26 +20,30 @@ jobs:
     executor: python-executor
     steps:
     - checkout
-    - run: echo "Linting..."
-    - run: echo "Running Unit Test..."
-    - run: echo "Building docker Image...."
-    - run: echo "Running Component tests..."
-    - run: echo "pushing docker image to ECS..."
+    - run: echo "Linting"
+    - run: echo "Running Unit Test"
+    - run: echo "Building docker image"
+    - run: echo "Running Component tests on docker container"
+    - run: echo "Pushing versioned docker image to ECS"
 
-  test:
+  deploy-to-ci:
     executor: python-executor
     steps:
     - docker-pull
     - deploy-to-kubernetes
-    - run: echo "Run Integration tests"
 
-  run-qa:
+  run-integration-tests:
+    executor: python-executor
+    steps:
+    - run: echo "Running automated integration tests"
+
+
+  run-automated-qa-tests:
     executor: python-executor
     steps:
     - docker-pull
     - deploy-to-kubernetes
     - run: echo "Run Automated QA Tests"
-    - run: echo "Run Manual QA Tests"
 
 
   staging:
@@ -60,20 +64,10 @@ jobs:
 
 workflows:
   version: 2.1
-  build-and-test:
+  ci:
     jobs:
     - build
-    - test:
-        requires:
-        - build
-    - execute-qa-deployment:
-        type: approval
-        requires:
-        - test
-    - run-qa:
-        requires:
-        - execute-qa-deployment
-    - approve-qa-tests:
-        type: approval
-        requires:
-        - run-qa
+    - deploy-to-ci
+      requires: build
+    - run-integration-tests
+      requires: run-integration-tests
