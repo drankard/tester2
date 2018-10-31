@@ -72,7 +72,7 @@ workflows:
         - test
     - run-qa:
         requires:
-        - deploy-to-qa
+        - execute-qa-deployment
     - approve-qa-tests:
         type: approval
         requires:
