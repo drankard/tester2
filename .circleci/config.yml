@@ -76,7 +76,6 @@ workflows:
     - deploy-to-ci:
         requires:
         - build
-        context: CI
     - run-integration-tests:
         requires:
         - deploy-to-ci
@@ -96,7 +95,6 @@ workflows:
         filters:
           branches:
             only: master
-        context: QA
 
     - run-automated-qa-tests:
         requires:
