@@ -72,7 +72,17 @@ workflows:
   version: 2.1
   cd-pipeline:
     jobs:
-    - qa:
+    - confirm-deploy-qa:
+        type: approval
+        requires:
+        - build
+        - run-integration-tests
+        filters:
+          branches:
+            only: master
+
+    - deploy-to-qa:
+        requires: confirm-deploy-qa
         filters:
           tags:
             only:
