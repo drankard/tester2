@@ -41,9 +41,6 @@ jobs:
     - run: echo "Run Automated QA Tests"
     - run: echo "Run Manual QA Tests"
 
-  approve-qa:
-    requires: qa
-
   staging:
     executor: python-executor
     steps:
@@ -72,10 +69,10 @@ workflows:
         type: approval
         requires: test
 
-    - qa-approval:
+    - approve-qa:
         type: approval
         requires: run-qa
 
     - deploy-to-staging:
         type: approval
-        requires: qa-approval
+        requires: approve-qa
