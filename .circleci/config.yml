@@ -3,17 +3,52 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/python:3.6
+    - image: circleci/python:3.6
     steps:
-      - checkout
-      - run: echo "Linting..."
-      - run: echo "Running Unit Test..."
-      - run: echo "Building docker Image...."
-      - run: echo "Running Component tests..."
-      - run: echo "pushing docker image to ECS..."
+    - checkout
+    - run: echo "Linting..."
+    - run: echo "Running Unit Test..."
+    - run: echo "Building docker Image...."
+    - run: echo "Running Component tests..."
+    - run: echo "pushing docker image to ECS..."
+  test:
+    docker:
+    - image: circleci/python:3.6
+    steps:
+    - run: echo "pull docker image"
+    - run: echo "Deploy to kubernetes"
+    - run: echo "Run Integration tests"
+
+  qa:
+    docker:
+    - image: circleci/python:3.6
+    steps:
+    - run: echo "pull docker image"
+    - run: echo "Deploy to kubernetes"
+    - run: echo "Run Automated QA Tests"
+    - run: echo "Run Manual QA Tests"
+
+  staging:
+    docker:
+    - image: circleci/python:3.6
+    steps:
+    - run: echo "pull docker image"
+    - run: echo "Deploy to kubernetes"
+    - run: echo "Run Stree Tests"
+    - run: echo "Run Manual QA Tests"
+
+  production:
+    docker:
+    - image: circleci/python:3.6
+    steps:
+    - run: echo "pull docker image"
+    - run: echo "Deploy to kubernetes"
+    - run: echo "Run Smoke Tests"
+
 
 workflows:
   version: 2
-  tests:
+  build-and-test:
     jobs:
-      - build
+    - build
+    - test
