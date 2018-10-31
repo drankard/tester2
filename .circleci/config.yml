@@ -14,7 +14,7 @@ commands:
   deploy-to-kubernetes:
     steps:
     - run: echo "Deploying to Kubernetes"
-    - run: echo "Tagging stage to github
+    - run: echo "Tagging stage to github"
 
 jobs:
   build:
