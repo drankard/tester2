@@ -1,5 +1,11 @@
 version: 2.1
     
+
+executors:
+  python-executor:
+    docker:
+      - image: circleci/python:3.6
+
 commands:
   docker_pull:
     steps:
@@ -11,8 +17,7 @@ commands:
 
 jobs:
   build:
-    docker:
-    - image: circleci/python:3.6
+    executor: python-executor
     steps:
     - checkout
     - run: echo "Linting..."
@@ -21,8 +26,7 @@ jobs:
     - run: echo "Running Component tests..."
     - run: echo "pushing docker image to ECS..."
   test:
-    docker:
-    - image: circleci/python:3.6
+    executor: python-executor
     steps:
     - docker_pull
     - deploy_to_kubernetes
