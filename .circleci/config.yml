@@ -7,11 +7,11 @@ executors:
       - image: circleci/python:3.6
 
 commands:
-  docker_pull:
+  docker-pull:
     steps:
     - run: echo "Pulling docker image"
 
-  deploy_to_kubernetes:
+  deploy-to-kubernetes:
     steps:
     - run: echo "Deploying to Kubernetes"
 
@@ -29,8 +29,8 @@ jobs:
   test:
     executor: python-executor
     steps:
-    - docker_pull
-    - deploy_to_kubernetes
+    - docker-pull
+    - deploy-to-kubernetes
     - run: echo "Run Integration tests"
 
   run-qa:
