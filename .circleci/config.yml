@@ -37,6 +37,11 @@ jobs:
     steps:
     - run: echo "Running automated integration tests"
 
+  deploy-to-qa:
+    executor: python-executor
+    steps:
+    - docker-pull
+    - deploy-to-kubernetes
 
   run-automated-qa-tests:
     executor: python-executor
@@ -73,7 +78,7 @@ workflows:
     - run-integration-tests:
         requires:
         - deploy-to-ci
-    - confirm_deploy_qa:
+    - confirm-deploy-qa:
         type: approval
         requires:
         - build
@@ -81,9 +86,9 @@ workflows:
           branches:
             only: master
 
-    - deploy_qa:
+    - deploy-to-qa:
         requires:
-        - confirm_deploy_qa
+        - confirm-deploy-qa
         filters:
           branches:
             only: master
