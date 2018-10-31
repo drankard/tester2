@@ -56,5 +56,5 @@ workflows:
         - build
   qa:
    jobs:
-   - qa
-     type: approval
+   - qa:
+       type: approval
