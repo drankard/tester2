@@ -33,8 +33,7 @@ jobs:
     - run: echo "Run Integration tests"
 
   qa:
-    docker:
-    - image: circleci/python:3.6
+    executor: python-executor
     steps:
     - docker-pull
     - deploy-to-kubernetes
@@ -42,8 +41,7 @@ jobs:
     - run: echo "Run Manual QA Tests"
 
   staging:
-    docker:
-    - image: circleci/python:3.6
+    executor: python-executor
     steps:
     - run: echo "pull docker image"
     - run: echo "Deploy to kubernetes"
@@ -51,8 +49,7 @@ jobs:
     - run: echo "Run Manual QA Tests"
 
   production:
-    docker:
-    - image: circleci/python:3.6
+    executor: python-executor
     steps:
     - run: echo "pull docker image"
     - run: echo "Deploy to kubernetes"
