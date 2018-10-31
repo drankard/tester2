@@ -67,9 +67,9 @@ workflows:
   ci:
     jobs:
     - build
-    - deploy-to-ci
+    - deploy-to-ci:
         requires:
         - build
-    - run-integration-tests
+    - run-integration-tests:
         requires:
         - run-integration-tests
