@@ -6,10 +6,12 @@ jobs:
       - image: circleci/python:3.6
     steps:
       - checkout
-      - run: apt-get update
-      - run: apt-get install -yq libssl-dev pkg-config
-      - run: swift build
-      - run: swift test
+      - run: echo "Linting..."
+      - run: echo "Running Unit Test..."
+      - run: echo "Building docker Image...."
+      - run: echo "Running Component tests..."
+      - run: echo "pushing docker image to ECS..."
+
 workflows:
   version: 2
   tests:
