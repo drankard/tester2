@@ -70,6 +70,14 @@ jobs:
 
 workflows:
   version: 2.1
+  cd-pipeline:
+    jobs:
+    - qa:
+        filters:
+          tags:
+            only:
+            - /qa-.*/
+
   ci:
     jobs:
     - build
