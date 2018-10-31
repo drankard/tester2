@@ -66,4 +66,6 @@ workflows:
     - test:
         requires:
         - build
-    - run-qa
+    - run-qa:
+       requires:
+       - test
