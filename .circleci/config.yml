@@ -66,6 +66,11 @@ workflows:
     - test:
         requires:
         - build
+    - deploy-to-qa:
+        type: approval
+        requires:
+        - test
     - run-qa:
        requires:
-       - test
+       - deploy-to-qa
+    - 
