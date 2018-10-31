@@ -14,6 +14,7 @@ commands:
   deploy-to-kubernetes:
     steps:
     - run: echo "Deploying to Kubernetes"
+      run: echo "Tagging stage to github
 
 jobs:
   build:
@@ -41,7 +42,7 @@ jobs:
     executor: python-executor
     steps:
     - docker-pull
-    - deploy-to-kubernetes
+    - deploy-to-kubernetes:
 
   run-automated-qa-tests:
     executor: python-executor
@@ -75,6 +76,7 @@ workflows:
     - deploy-to-ci:
         requires:
         - build
+        context: CI
     - run-integration-tests:
         requires:
         - deploy-to-ci
@@ -85,8 +87,6 @@ workflows:
         - build
         - run-integration-tests
         filters:
-          tags:
-            only: /^qa.*/
           branches:
             only: master
 
@@ -94,17 +94,14 @@ workflows:
         requires:
         - confirm-deploy-qa
         filters:
-          tags:
-            only: /^qa.*/
           branches:
             only: master
+        context: QA
 
     - run-automated-qa-tests:
         requires:
         - deploy-to-qa
         filters:
-          tags:
-            only: /^qa.*/
           branches:
             only: master
 
@@ -113,16 +110,12 @@ workflows:
         requires:
         - deploy-to-qa
         filters:
-          tags:
-            only: /^qa.*/
           branches:
             only: master
 
     - confirm-deploy-staging:
         type: approval
         filters:
-          tags:
-            only: /^staging.*/
           branches:
             only: master
         requires:
