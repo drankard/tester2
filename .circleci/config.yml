@@ -78,6 +78,8 @@ workflows:
         filters:
           tags:
             only: /^qa-.*/
+          branches:
+            ignore: /.*/
 
     - deploy-to-qa:
         requires:
