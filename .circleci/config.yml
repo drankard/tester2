@@ -105,7 +105,8 @@ workflows:
         filters:
           branches:
             only: master
-
+  qa:
+    jobs:
     - deploy-to-qa:
         requires:
         - confirm-deploy-qa
@@ -127,7 +128,8 @@ workflows:
         filters:
           branches:
             only: master
-
+  staging:
+    jobs:
     - confirm-deploy-staging:
         type: approval
         filters:
