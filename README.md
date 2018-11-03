@@ -1,4 +1,3 @@
 # tester2
 TESTER
-HEHE
 HELLO
