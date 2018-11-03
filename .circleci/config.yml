@@ -108,11 +108,11 @@ workflows:
   qa:
     jobs:
     - deploy-to-qa:
-      filters:
-        tags:
-          only: qa-v\d+\.\d+\.\d+$
-        branches:
-          ignore: /.*/
+        filters:
+          tags:
+            only: qa-v\d+\.\d+\.\d+$
+          branches:
+            ignore: /.*/
 
     - run-automated-qa-tests:
         requires:
