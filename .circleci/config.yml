@@ -71,22 +71,6 @@ jobs:
 workflows:
   version: 2.1
 
-  cd-pipeline:
-    jobs:
-    - confirm-deploy-qa:
-        type: approval
-        filters:
-          tags:
-            only: /^qa-.*/
-          branches:
-            ignore: /.*/
-
-    - deploy-to-qa:
-        requires:
-        - confirm-deploy-qa
-
-
-
   ci:
     jobs:
     - build
