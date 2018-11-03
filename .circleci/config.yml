@@ -134,3 +134,4 @@ workflows:
         type: approval
         filters:
           branches:
+            only: master
