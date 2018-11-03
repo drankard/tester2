@@ -108,11 +108,11 @@ workflows:
   qa:
     jobs:
     - deploy-to-qa:
-        requires:
-        - confirm-deploy-qa
-        filters:
-          branches:
-            only: master
+      filters:
+        tags:
+          only: qa-v\d+\.\d+\.\d+$
+        branches:
+          ignore: /.*/
 
     - run-automated-qa-tests:
         requires:
@@ -134,9 +134,3 @@ workflows:
         type: approval
         filters:
           branches:
-            only: master
-        requires:
-        - build
-        - confirm-qa-ok
-        - run-automated-qa-tests
-
