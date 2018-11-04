@@ -7,7 +7,7 @@ SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 echo $SCRIPTPATH
 echo "Executing docker"
 docker run --rm -v $SCRIPTPATH:/app treeder/bump patch
-echo "Hello"
+echo "Updating git"
 git add . && git commit -m "Version $VERSION promoted to $ENV [skip ci]"
 git tag $TAG
 
