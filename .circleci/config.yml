@@ -89,15 +89,13 @@ workflows:
 
   qa:
     jobs:
-    - confirm-run-qa:
-        filters:
-          tags:
-            only: qa-v\d+\.\d+\.\d+$
-
 
     - deploy-to-qa:
         requires:
         - confirm-run-qa
+        filters:
+          tags:
+            only: qa-v\d+\.\d+\.\d+$
 
     - run-automated-qa-tests:
         requires:
