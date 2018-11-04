@@ -81,22 +81,23 @@ workflows:
         requires:
         - deploy-to-ci
 
-    - confirm-deploy-qa:
-        type: approval
-        requires:
-        - build
-        - run-integration-tests
-        filters:
-          branches:
-            only: master
   qa:
     jobs:
-    - deploy-to-qa:
+    - confirm-run-qa:
+        type: approval
         filters:
           tags:
             only: qa-v\d+\.\d+\.\d+$
           branches:
             ignore: /.*/
+
+    - tag-qa:
+        requires:
+        - confirm-run-qa
+
+    - deploy-to-qa:
+        requires:
+        - tag-qa
 
     - run-automated-qa-tests:
         requires:
