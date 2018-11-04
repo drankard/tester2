@@ -41,6 +41,7 @@ jobs:
   tag-qa:
     executor: python-executor
     steps:
+            - checkout
             - run: ls -la
 
   deploy-to-qa:
