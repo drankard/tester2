@@ -42,11 +42,11 @@ jobs:
     executor: python-executor
     steps:
             - setup_remote_docker
+            - checkout
             - run: |
                 git config --global user.email circleci@build
                 git config --global user.name CircleCI
                 ls -la
-            - checkout
             - run: bash promote.sh qa
 
   deploy-to-qa:
