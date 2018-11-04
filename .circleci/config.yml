@@ -41,6 +41,7 @@ jobs:
   tag-qa:
     executor: python-executor
     steps:
+            - setup_remote_docker
             - checkout
             - run: bash promote.sh qa
 
