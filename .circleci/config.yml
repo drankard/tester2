@@ -41,7 +41,7 @@ jobs:
   tag-qa:
     executor: python-executor
     steps:
-            - run: ./promote.sh qa
+            - run: ls -la
 
   deploy-to-qa:
     executor: python-executor
