@@ -87,6 +87,8 @@ workflows:
         - deploy-to-ci
     - approve-to-qa:
         type: approval
+        requires:
+        - run-integration-tests
                 
 
   qa:
