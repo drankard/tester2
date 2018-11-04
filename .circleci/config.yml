@@ -93,8 +93,6 @@ workflows:
         filters:
           tags:
             only: qa-v\d+\.\d+\.\d+$
-          branches:
-            ignore: /.*/
 
     - tag-qa:
         requires:
@@ -107,21 +105,8 @@ workflows:
     - run-automated-qa-tests:
         requires:
         - deploy-to-qa
-        filters:
-          branches:
-            only: master
 
     - confirm-qa-ok:
         type: approval
         requires:
-        - deploy-to-qa
-        filters:
-          branches:
-            only: master
-  staging:
-    jobs:
-    - confirm-deploy-staging:
-        type: approval
-        filters:
-          branches:
-            only: master
+        - run-automated-qa-tests
