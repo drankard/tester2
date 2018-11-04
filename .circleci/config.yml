@@ -38,6 +38,11 @@ jobs:
     steps:
     - run: echo "Running automated integration tests"
 
+  tag-qa:
+    executor: python-executor
+    steps:
+            - run: echo "Hello"
+
   deploy-to-qa:
     executor: python-executor
     steps:
