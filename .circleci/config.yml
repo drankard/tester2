@@ -91,6 +91,7 @@ workflows:
     jobs:
 
     - deploy-to-qa:
+        type: approval
         filters:
           tags:
             only: qa-v\d+\.\d+\.\d+$
