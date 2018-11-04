@@ -97,6 +97,10 @@ workflows:
           branches:
             ignore: /.*/
 
+    - deploy-to-qa:
+        requires:
+        - approve-to-qa
+
     - run-automated-qa-tests:
         requires:
         - deploy-to-qa
