@@ -5,8 +5,9 @@ VERSION="$(cat VERSION)"
 TAG="$ENV-v$VERSION"
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 echo $SCRIPTPATH
-ls -la
+echo "Executing docker"
 docker run --rm -v $SCRIPTPATH:/app treeder/bump patch
+echo "Hello"
 git add . && git commit -m "Version $VERSION promoted to $ENV [skip ci]"
 git tag $TAG
 
