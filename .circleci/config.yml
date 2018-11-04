@@ -100,7 +100,7 @@ workflows:
 
     - deploy-to-qa:
         requires:
-        - tag-qa
+        - confirm-run-qa
 
     - run-automated-qa-tests:
         requires:
