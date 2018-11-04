@@ -47,7 +47,7 @@ jobs:
                 git config --global user.email circleci@build
                 git config --global user.name CircleCI
                 ls -la
-            - run: bash promote.sh qa
+            - run: ./promote.sh qa
 
   deploy-to-qa:
     executor: python-executor
