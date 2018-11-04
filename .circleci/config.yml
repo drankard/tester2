@@ -85,14 +85,11 @@ workflows:
     - run-integration-tests:
         requires:
         - deploy-to-ci
-    - tag-qa:
-        requires:
-        - run-integration-tests
+                
 
   qa:
     jobs:
     - confirm-run-qa:
-        type: approval
         filters:
           tags:
             only: qa-v\d+\.\d+\.\d+$
