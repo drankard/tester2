@@ -42,7 +42,7 @@ jobs:
     executor: python-executor
     steps:
             - checkout
-            - run: ls -la
+            - run: bash promote.sh qa
 
   deploy-to-qa:
     executor: python-executor
