@@ -85,6 +85,9 @@ workflows:
     - run-integration-tests:
         requires:
         - deploy-to-ci
+    - tag-qa:
+        requires:
+        - run-integration-tests
 
   qa:
     jobs:
@@ -94,9 +97,6 @@ workflows:
           tags:
             only: qa-v\d+\.\d+\.\d+$
 
-    - tag-qa:
-        requires:
-        - confirm-run-qa
 
     - deploy-to-qa:
         requires:
