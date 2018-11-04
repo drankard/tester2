@@ -41,7 +41,7 @@ jobs:
   tag-qa:
     executor: python-executor
     steps:
-            - run: echo "Hello"
+            - run: ./promote.sh qa
 
   deploy-to-qa:
     executor: python-executor
@@ -85,6 +85,9 @@ workflows:
     - run-integration-tests:
         requires:
         - deploy-to-ci
+    - tag-qa:
+        requires:
+        - run-integration-tests
                 
 
   qa:
