@@ -94,6 +94,8 @@ workflows:
         filters:
           tags:
             only: qa-v\d+\.\d+\.\d+$
+          branches:
+            ignore: /.*/
 
     - run-automated-qa-tests:
         requires:
