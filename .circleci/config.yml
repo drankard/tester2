@@ -12,7 +12,7 @@ commands:
       image:
         type: string
     steps:
-    - run: echo "Pulling docker image: << paramaters.image >>"
+    - run: echo Pulling docker image: << parameters.image >>
 
   deploy-to-kubernetes:
     steps:
