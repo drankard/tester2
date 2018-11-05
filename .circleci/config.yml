@@ -9,12 +9,13 @@ executors:
 commands:
   docker-pull:
     steps:
-    - run: echo "Pulling docker image ${CIRCLE_TAG}"
+    - run: VERSION=$(cat VERSION)
+    - run: echo "Pulling docker image $VERSION"
 
   deploy-to-kubernetes:
     steps:
-    - run: echo "Deploying ${CIRCLE_TAG} to Kubernetes"
-    - run: echo "Tagging stage to github"
+    - run: VERSION=$(cat VERSION)
+    - run: echo "Deploying ${VERSION} to Kubernetes"
 
 jobs:
   build:
