@@ -8,8 +8,11 @@ executors:
 
 commands:
   docker-pull:
+    parameters:
+      image:
+        type: string
     steps:
-    - run: echo "Pulling docker image ${VERSION}"
+    - run: echo "Pulling docker image: << paramaters.image >>"
 
   deploy-to-kubernetes:
     steps:
@@ -33,16 +36,18 @@ jobs:
     - checkout
     - attach_workspace:
         at: artifacts
-    - run: VERSION=$(cat artifacts/VERSION)
     - run: echo "Linting"
     - run: echo "Running Unit Test"
     - run: echo "Building docker image"
-    - run: echo "new version number $(cat artifacts/VERSION)"
+    - run: |
+        echo "Tagging docker image: my-image:$(cat artifacts/VERSION)"
+
 
   deploy-to-ci:
     executor: python-executor
     steps:
-    - docker-pull
+    - docker-pull:
+        image: my-image:$(cat artifacts/VERSION)
     - deploy-to-kubernetes
 
   run-integration-tests:
@@ -54,6 +59,8 @@ jobs:
     machine: true
     steps:
             - checkout
+            - attach_workspace:
+                at: .
             - add_ssh_keys:
                 fingerprints:
                 - "85:4f:eb:ce:f9:53:72:72:bd:11:14:84:d0:63:4d:2a"
@@ -62,7 +69,6 @@ jobs:
                 git config --global user.email circleci@build
                 git config --global user.name CircleCI
                 git config --global pager.tag false
-            - run: ./promote.sh qa
 
 
   deploy-to-qa:
