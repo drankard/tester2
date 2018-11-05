@@ -16,19 +16,28 @@ commands:
     - run: echo "Deploying ${VERSION} to Kubernetes"
 
 jobs:
+  start-ci-flow:
+    machine: true
+    steps:
+      - checkout
+      - run: docker run --rm -v ${PWD}:/app treeder/bump patch
+      - persist_to_workspace:
+          root: artifacts
+          paths: VERSION
+
+
+
   build:
     executor: python-executor
     steps:
     - checkout
+    - attach_workspace:
+        at: artifacts
     - run: echo "Linting"
     - run: echo "Running Unit Test"
     - run: echo "Building docker image"
-    - run: echo "Running Component tests on docker container"
-    - run: VERSION=$(cat VERSION)
-    - run: echo "Pushing docker image ${VERSION} to ECS"
-    - persist_to_workspace:
-        - paths: VERSION
-
+    - run: bump.sh
+    - run: echo "new version number ${VERSION}"
   deploy-to-ci:
     executor: python-executor
     steps:
