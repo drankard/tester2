@@ -33,6 +33,8 @@ jobs:
     - checkout
     - attach_workspace:
         at: artifacts
+    - run: echo $(cat VERSION)
+    - run: echo $(cat artifacts/VERSION)
     - run: echo "Linting"
     - run: echo "Running Unit Test"
     - run: echo "Building docker image"
