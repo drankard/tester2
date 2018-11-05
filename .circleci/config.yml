@@ -9,11 +9,11 @@ executors:
 commands:
   docker-pull:
     steps:
-    - run: echo "Pulling docker image"
+    - run: echo "Pulling docker image ${CIRCLE_TAG}"
 
   deploy-to-kubernetes:
     steps:
-    - run: echo "Deploying to Kubernetes"
+    - run: echo "Deploying ${CIRCLE_TAG} to Kubernetes"
     - run: echo "Tagging stage to github"
 
 jobs:
@@ -119,3 +119,4 @@ workflows:
             ignore: /.*/
           tags:
             only: /^qa-v[0-9]+(\.[0-9]+)*$/
+
