@@ -47,7 +47,6 @@ jobs:
                 git config --global user.email circleci@build
                 git config --global user.name CircleCI
                 git config --global pager.tag false
-                ls -la
             - run: ./promote.sh qa
 
   deploy-to-qa:
