@@ -2,7 +2,7 @@
 
 ENV=$1
 VERSION="$(cat VERSION)"
-TAG="$ENV-v$VERSION"
+TAG="${ENV}-v${VERSION}"
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 echo $SCRIPTPATH
 echo "Executing docker"
