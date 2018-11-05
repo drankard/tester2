@@ -22,7 +22,7 @@ jobs:
       - checkout
       - run: docker run --rm -v ${PWD}:/app treeder/bump patch
       - persist_to_workspace:
-          root: artifacts
+          root: .
           paths: VERSION
 
 
