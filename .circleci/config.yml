@@ -42,6 +42,9 @@ jobs:
     machine: true
     steps:
             - checkout
+            - add_ssh_keys:
+                fingerprints:
+                - "4d:62:09:bc:f4:dd:3c:21:24:bb:8b:ae:d2:53:47:24"
             - run: |
                 git config credential.helper 'cache --timeout=120'
                 git config --global user.email circleci@build
