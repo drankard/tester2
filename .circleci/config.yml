@@ -13,7 +13,7 @@ commands:
         type: string
         default: "Hello World"
     steps:
-    - run: echo "Pulling docker image: << parameters.image >>"
+    - run: echo "Pulling docker image << parameters.image >>"
 
   deploy-to-kubernetes:
     steps:
