@@ -16,7 +16,7 @@ commands:
     - run: echo "Deploying ${VERSION} to Kubernetes"
 
 jobs:
-  start-ci-flow:
+  start-ci:
     machine: true
     steps:
       - checkout
@@ -38,6 +38,7 @@ jobs:
     - run: echo "Building docker image"
     - run: bump.sh
     - run: echo "new version number ${VERSION}"
+
   deploy-to-ci:
     executor: python-executor
     steps:
@@ -83,7 +84,10 @@ workflows:
 
   ci:
     jobs:
+    - start-ci
     - build
+        requires:
+          - start-ci
     - deploy-to-ci:
         requires:
         - build
