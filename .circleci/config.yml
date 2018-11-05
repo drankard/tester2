@@ -104,8 +104,6 @@ workflows:
     jobs:
     - deploy-to-qa:
         type: approval
-        requires:
-        - approve-to-qa
         filters:
           branches:
             ignore: /.*/
