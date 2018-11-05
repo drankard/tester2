@@ -26,6 +26,9 @@ jobs:
     - run: echo "Running Component tests on docker container"
     - run: VERSION=$(cat VERSION)
     - run: echo "Pushing docker image ${VERSION} to ECS"
+    - store_artifacts:
+        path: VERSION
+        destination: VERSION
 
   deploy-to-ci:
     executor: python-executor
