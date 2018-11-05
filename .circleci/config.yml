@@ -3,9 +3,8 @@ version: 2.1
 
 executors:
   python-executor:
-    machine:
-      docker:
-      - image: circleci/python:3.6
+    docker:
+    - image: circleci/python:3.6
 
 commands:
   docker-pull:
@@ -40,7 +39,8 @@ jobs:
     - run: echo "Running automated integration tests"
 
   tag-qa:
-    executor: python-executor
+    machine:
+      image: circleci/python:3.6
     steps:
             - setup_remote_docker
             - checkout
