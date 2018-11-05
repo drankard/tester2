@@ -98,13 +98,18 @@ workflows:
         - pull-into-qa
         filters:
           branches:
-            ignore: /.*/
-          tags:
-            only: /^qa-v[0-9]+(\.[0-9]+)*$/
+            only: master
+
     - run-automated-qa-tests:
         requires:
         - deploy-to-qa
+        filters:
+          branches:
+            only: master
     - confirm-qa-ok:
         type: approval
         requires:
         - run-automated-qa-tests
+        filters:
+          branches:
+            only: master
