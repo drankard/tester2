@@ -39,8 +39,7 @@ jobs:
     - run: echo "Running automated integration tests"
 
   tag-qa:
-    machine:
-      image: circleci/python:3.6
+    machine: true
     steps:
             - checkout
             - run: |
