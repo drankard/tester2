@@ -42,7 +42,6 @@ jobs:
     machine:
       image: circleci/python:3.6
     steps:
-            - setup_remote_docker
             - checkout
             - run: |
                 git config --global user.email circleci@build
