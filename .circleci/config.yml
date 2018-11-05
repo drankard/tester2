@@ -38,7 +38,7 @@ jobs:
     steps:
     - run: echo "Running automated integration tests"
 
-  tag-qa:
+  tag-build:
     machine: true
     steps:
             - checkout
@@ -79,7 +79,7 @@ workflows:
     - run-integration-tests:
         requires:
         - deploy-to-ci
-    - tag-qa:
+    - tag-build:
         requires:
         - run-integration-tests
                 
@@ -98,18 +98,24 @@ workflows:
         - pull-into-qa
         filters:
           branches:
-            only: master
+            ignore: /.*/
+          tags:
+            only: /^qa-v[0-9]+(\.[0-9]+)*$/
 
     - run-automated-qa-tests:
         requires:
         - deploy-to-qa
         filters:
           branches:
-            only: master
+            ignore: /.*/
+          tags:
+            only: /^qa-v[0-9]+(\.[0-9]+)*$/
     - confirm-qa-ok:
         type: approval
         requires:
         - run-automated-qa-tests
         filters:
           branches:
-            only: master
+            ignore: /.*/
+          tags:
+            only: /^qa-v[0-9]+(\.[0-9]+)*$/
