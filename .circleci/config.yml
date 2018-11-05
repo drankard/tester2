@@ -11,6 +11,7 @@ commands:
     parameters:
       image:
         type: string
+        default: "Hello World"
     steps:
     - run: echo Pulling docker image: << parameters.image >>
 
