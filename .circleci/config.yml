@@ -33,11 +33,11 @@ jobs:
     - checkout
     - attach_workspace:
         at: artifacts
-    - run: export VERSION=$(cat artifacts/VERSION)
+    - run: VERSION=$(cat artifacts/VERSION)
     - run: echo "Linting"
     - run: echo "Running Unit Test"
     - run: echo "Building docker image"
-    - run: echo "new version number ${VERSION}"
+    - run: echo "new version number $(cat artifacts/VERSION)"
 
   deploy-to-ci:
     executor: python-executor
