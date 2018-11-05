@@ -9,12 +9,10 @@ executors:
 commands:
   docker-pull:
     steps:
-    - run: VERSION=$(cat VERSION)
-    - run: echo "Pulling docker image $VERSION"
+    - run: echo "Pulling docker image ${VERSION}"
 
   deploy-to-kubernetes:
     steps:
-    - run: VERSION=$(cat VERSION)
     - run: echo "Deploying ${VERSION} to Kubernetes"
 
 jobs:
@@ -26,7 +24,8 @@ jobs:
     - run: echo "Running Unit Test"
     - run: echo "Building docker image"
     - run: echo "Running Component tests on docker container"
-    - run: echo "Pushing versioned docker image to ECS"
+    - run: VERSION=$(cat VERSION)
+    - run: echo "Pushing docker image ${VERSION} to ECS"
 
   deploy-to-ci:
     executor: python-executor
