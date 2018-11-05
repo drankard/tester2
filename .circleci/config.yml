@@ -109,15 +109,12 @@ workflows:
             ignore: /.*/
           tags:
             only: /^qa-v[0-9]+(\.[0-9]+)*$/
-
     - deploy-to-qa:
         requires:
         - pull-into-qa
-
     - run-automated-qa-tests:
         requires:
         - deploy-to-qa
-
     - confirm-qa-ok:
         type: approval
         requires:
