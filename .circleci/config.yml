@@ -85,7 +85,7 @@ workflows:
   ci:
     jobs:
     - start-ci
-    - build
+    - build:
         requires:
           - start-ci
     - deploy-to-ci:
