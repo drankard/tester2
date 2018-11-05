@@ -67,22 +67,6 @@ jobs:
     - run: echo "Run Automated QA Tests"
 
 
-  staging:
-    executor: python-executor
-    steps:
-    - run: echo "pull docker image"
-    - run: echo "Deploy to kubernetes"
-    - run: echo "Run Stree Tests"
-    - run: echo "Run Manual QA Tests"
-
-  production:
-    executor: python-executor
-    steps:
-    - run: echo "pull docker image"
-    - run: echo "Deploy to kubernetes"
-    - run: echo "Run Smoke Tests"
-
-
 workflows:
   version: 2.1
 
@@ -112,6 +96,11 @@ workflows:
     - deploy-to-qa:
         requires:
         - pull-into-qa
+        filters:
+          branches:
+            ignore: /.*/
+          tags:
+            only: /^qa-v[0-9]+(\.[0-9]+)*$/
     - run-automated-qa-tests:
         requires:
         - deploy-to-qa
