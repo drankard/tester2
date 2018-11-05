@@ -12,6 +12,6 @@ echo "Updating git"
 git add . && git commit -m "Version $VERSION promoted to $ENV [skip ci]"
 git tag $TAG
 
-git tag -l 
+git tag -l
 #git push origin master
 #git push origin $TAG
