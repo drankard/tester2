@@ -93,7 +93,7 @@ jobs:
                 git config --global user.email circleci@build
                 git config --global user.name CircleCI
                 git config --global pager.tag false
-            - run: ./promote.sh << parameters.env >
+            - run: ./promote.sh << parameters.env >>
 
 
   deploy-to-qa:
