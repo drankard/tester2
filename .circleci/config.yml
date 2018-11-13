@@ -134,7 +134,7 @@ workflows:
         - build
     - run-integration-tests:
         requires:
-        - deploy-to
+        - deploy-to-ci
     - tag-build:
         name: tag-build-qa
         env: qa
