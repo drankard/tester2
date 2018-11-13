@@ -133,7 +133,7 @@ workflows:
         - build
     - run-integration-tests:
         requires:
-        - deploy-to-ci
+        - deploy-to
     - tag-build:
         name: tag-build-qa
         env: qa
@@ -154,7 +154,7 @@ workflows:
 
     - run-automated-qa-tests:
         requires:
-        - deploy-to-qa
+        - deploy-to
         <<: *qa-filters
 
     - confirm-manual-qa-ok:
@@ -183,7 +183,7 @@ workflows:
 
     - run-stress-tests:
         requires:
-        - deploy-to-staging
+        - deploy-to
         <<: *staging-filters
 
     - confirm-manual-qa-ok:
