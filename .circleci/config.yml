@@ -154,7 +154,7 @@ workflows:
     - tag-build:
         env: staging
         requires:
-        - run-integration-tests
+        - confirm-manual-qa-ok
         <<: *qa-filters
 
 
