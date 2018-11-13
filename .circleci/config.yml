@@ -112,6 +112,11 @@ jobs:
     - deploy-to-kubernetes
     - run: echo "Run Automated QA Tests"
 
+  run-stress-tests:
+    executor: python-executor
+    steps:
+    - run: echo "Run Stress Tests"
+
 
 workflows:
   version: 2.1
