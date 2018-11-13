@@ -96,8 +96,11 @@ jobs:
             - run: ./promote.sh << parameters.env >>
 
 
-  deploy-to-qa:
+  deploy-to:
     executor: python-executor
+    parameters:
+      env:
+        type: string
     steps:
     - docker-pull
     - deploy-to-kubernetes
@@ -119,7 +122,8 @@ workflows:
     - build:
         requires:
           - start-ci
-    - deploy-to-ci:
+    - deploy-to:
+        env: ci
         requires:
         - build
     - run-integration-tests:
@@ -137,7 +141,8 @@ workflows:
     - start-qa:
         type: approval
         <<: *qa-filters
-    - deploy-to-qa:
+    - deploy-to:
+        env: qa
         requires:
         - start-qa
         <<: *qa-filters
@@ -160,3 +165,24 @@ workflows:
         <<: *qa-filters
 
 
+  staging:
+    jobs:
+    - start-staging:
+        type: approval
+        <<: *staging-filters
+    - deploy-to:
+        env: staging
+        requires:
+        - start-staging
+        <<: *staging-filters
+
+    - run-stress-tests:
+        requires:
+        - deploy-to-staging
+        <<: *staging-filters
+
+    - confirm-manual-qa-ok:
+        type: approval
+        requires:
+        -  run-stress-tests
+        <<: *staging-filters
