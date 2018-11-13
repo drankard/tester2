@@ -49,8 +49,10 @@ jobs:
     - run: echo "Linting"
     - run: echo "Running Unit Test"
     - run: echo "Building docker image"
+    - run: echo "Running Component tests"
     - run: |
         echo "Tagging docker image: my-image:$(cat artifacts/VERSION)"
+    - run: echo "Push to ECR"
 
 
   deploy-to-ci:
