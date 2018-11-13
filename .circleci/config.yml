@@ -1,6 +1,15 @@
 version: 2.1
     
 
+references:
+  qa-filters: &qa-filters
+    filters:
+      branches:
+        ignore: /.*/
+      tags:
+        only: /^qa-v[0-9]+(\.[0-9]+)*$/
+
+
 executors:
   python-executor:
     docker:
@@ -111,35 +120,20 @@ workflows:
     jobs:
     - start-qa:
         type: approval
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^qa-v[0-9]+(\.[0-9]+)*$/
+        <<: *qa-filters
     - deploy-to-qa:
         requires:
         - start-qa
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^qa-v[0-9]+(\.[0-9]+)*$/
+        <<: *qa-filters
 
     - run-automated-qa-tests:
         requires:
         - deploy-to-qa
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^qa-v[0-9]+(\.[0-9]+)*$/
+        <<: *qa-filters
+
     - confirm-qa-ok:
         type: approval
         requires:
         - run-automated-qa-tests
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^qa-v[0-9]+(\.[0-9]+)*$/
+        <<: *qa-filters
 
