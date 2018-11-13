@@ -80,7 +80,7 @@ jobs:
     parameters:
       env:
         type: string
-        
+
     steps:
             - checkout
             - attach_workspace:
@@ -126,6 +126,7 @@ workflows:
         requires:
         - deploy-to-ci
     - tag-build:
+        env: qa
         requires:
         - run-integration-tests
                 
@@ -150,25 +151,10 @@ workflows:
         requires:
         - run-automated-qa-tests
         <<: *qa-filters
-
-
-  staging:
-    jobs:
-    - start-staging:
-        type: approval
-        <<: *staging-filters
-    - deploy-to-staging:
+    - tag-build:
+        env: staging
         requires:
-        - start-qa
-        <<: *staging-filters
+        - run-integration-tests
+        <<: *qa-filters
 
-    - run-stress-tests:
-        requires:
-        - deploy-to-qa
-        <<: *staging-filters
 
-    - confirm-manual-qa-ok:
-        type: approval
-        requires:
-        - run-automated-qa-tests
-        <<: *staging-filters
