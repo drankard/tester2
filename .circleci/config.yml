@@ -126,6 +126,7 @@ workflows:
         requires:
         - deploy-to-ci
     - tag-build:
+        name: tag-build-qa
         env: qa
         requires:
         - run-integration-tests
@@ -152,6 +153,7 @@ workflows:
         - run-automated-qa-tests
         <<: *qa-filters
     - tag-build:
+        name: tag-build-staging
         env: staging
         requires:
         - confirm-manual-qa-ok
