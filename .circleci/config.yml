@@ -128,6 +128,7 @@ workflows:
         requires:
           - start-ci
     - deploy-to:
+        name: deploy-to-ci
         env: ci
         requires:
         - build
@@ -147,6 +148,7 @@ workflows:
         type: approval
         <<: *qa-filters
     - deploy-to:
+        name: deploy-to-qa
         env: qa
         requires:
         - start-qa
@@ -176,6 +178,7 @@ workflows:
         type: approval
         <<: *staging-filters
     - deploy-to:
+        name: deploy-to-staging
         env: staging
         requires:
         - start-staging
