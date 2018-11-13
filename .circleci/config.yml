@@ -156,7 +156,7 @@ workflows:
 
     - run-automated-qa-tests:
         requires:
-        - deploy-to
+        - deploy-to-qa
         <<: *qa-filters
 
     - confirm-manual-qa-ok:
@@ -186,7 +186,7 @@ workflows:
 
     - run-stress-tests:
         requires:
-        - deploy-to
+        - deploy-to-staging
         <<: *staging-filters
 
     - confirm-manual-qa-ok:
