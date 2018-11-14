@@ -152,10 +152,10 @@ workflows:
           - start-ci
     - build-win:
         requires:
-        - build-general
+        - general-ci
     - build-osx:
         requires:
-        - build-general
+        - general-ci
     - deploy-to:
         name: deploy-to-ci
         env: ci
