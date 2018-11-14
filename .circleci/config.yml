@@ -78,6 +78,7 @@ jobs:
   integration-tests:
     <<: *base
     steps:
+    - run: echo "Test if backend version is compatible"
     - run: echo "Running automated integration tests"
 
   tag-build:
