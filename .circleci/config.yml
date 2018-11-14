@@ -191,7 +191,7 @@ workflows:
         - automated-qa-tests-general
         <<: *qa-filters
 
-    - confirm-manual-qa-ok:
+    - confirm-manual-qa:
         type: approval
         requires:
         - automated-qa-tests-win
@@ -201,7 +201,7 @@ workflows:
         name: tag-build-staging
         env: staging
         requires:
-        - confirm-manual-qa-ok
+        - confirm-manual-qa
         <<: *qa-filters
 
 
@@ -222,7 +222,7 @@ workflows:
         - deploy-to-staging
         <<: *staging-filters
 
-    - confirm-manual-qa-ok:
+    - confirm-manual-qa:
         type: approval
         requires:
         -  run-stress-tests
