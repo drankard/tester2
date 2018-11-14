@@ -52,7 +52,7 @@ jobs:
 
 
 
-  build:
+  build-general:
     <<: *base
     steps:
     - checkout
@@ -66,6 +66,14 @@ jobs:
         echo "Tagging docker image: my-image:$(cat artifacts/VERSION)"
     - run: echo "Push to ECR"
 
+  build-win:
+    <<: *base
+    steps:
+      - run: echo "Some Windows specific things..."
+  build-osx:
+    <<: *base
+    steps:
+      - run: echo "Some OSX specific things..."
 
   run-integration-tests:
     <<: *base
@@ -121,14 +129,21 @@ workflows:
   ci:
     jobs:
     - start-ci
-    - build:
+    - build-general:
         requires:
           - start-ci
+    - build-win:
+        requires:
+        - build-general
+    - build-osx:
+        requires:
+        - build-general
     - deploy-to:
         name: deploy-to-ci
         env: ci
         requires:
-        - build
+        - build-win
+        - build-osx
     - run-integration-tests:
         requires:
         - deploy-to-ci
