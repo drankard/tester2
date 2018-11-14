@@ -158,8 +158,8 @@ workflows:
     - integration-tests:
         requires:
         - deploy-to-ci
-    - tag-build:
-        name: tag-qa
+    - promote-to:
+        name: promote-to-qa
         env: qa
         requires:
         - integration-tests
@@ -198,8 +198,8 @@ workflows:
         - qa-tests-win
         - qa-tests-osx
         <<: *qa-filters
-    - tag-build:
-        name: tag-staging
+    - promote-to:
+        name: promote-to-staging
         env: staging
         requires:
         - confirm-qa
@@ -223,8 +223,15 @@ workflows:
         - deploy-to-staging
         <<: *staging-filters
 
-    - confirm-manual-qa:
+    - confirm-qa:
         type: approval
         requires:
         -  run-stress-tests
         <<: *staging-filters
+
+    - promote-to:
+        name: promote-to-prod
+        env: prod
+        requires:
+        - confirm-qa
+        <<: *qa-filters
