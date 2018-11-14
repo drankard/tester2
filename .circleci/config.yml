@@ -63,13 +63,13 @@ jobs:
     steps:
     - checkout
     - attach_workspace:
-        at: artifacts
+        at: .
     - run: echo "Linting"
     - run: echo "Running Unit Test"
     - run: echo "Building docker image"
     - run: echo "Running Component tests"
     - run: |
-        echo "Tagging docker image: my-image:$(cat artifacts/VERSION)"
+        echo "Tagging docker image: my-image:$(cat VERSION)"
     - run: echo "Push to ECR"
 
   build-win:
