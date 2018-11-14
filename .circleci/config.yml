@@ -58,7 +58,7 @@ jobs:
 
 
 
-  build-general:
+  general-ci:
     <<: *base
     steps:
     - checkout
@@ -104,6 +104,8 @@ jobs:
                 git config --global user.email circleci@build
                 git config --global user.name CircleCI
                 git config --global pager.tag false
+            - run: git add . && git commit -m "Version $VERSION $ENV [skip ci]"
+            - run: git push origin master
             - run: ./promote.sh << parameters.env >>
 
 
@@ -145,7 +147,7 @@ workflows:
   ci:
     jobs:
     - start-ci
-    - build-general:
+    - general-ci:
         requires:
           - start-ci
     - build-win:
