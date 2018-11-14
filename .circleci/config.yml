@@ -75,7 +75,7 @@ jobs:
     steps:
       - run: echo "Some OSX specific things..."
 
-  run-integration-tests:
+  integration-tests:
     <<: *base
     steps:
     - run: echo "Running automated integration tests"
@@ -154,14 +154,14 @@ workflows:
         requires:
         - build-win
         - build-osx
-    - run-integration-tests:
+    - integration-tests:
         requires:
         - deploy-to-ci
     - tag-build:
-        name: tag-build-qa
+        name: tag-qa
         env: qa
         requires:
-        - run-integration-tests
+        - integration-tests
                 
 
   qa:
@@ -176,29 +176,29 @@ workflows:
         - start-qa
         <<: *qa-filters
 
-    - automated-qa-tests-general:
+    - qa-tests-general:
         requires:
         - deploy-to-qa
         <<: *qa-filters
 
-    - automated-qa-tests-win:
+    - qa-tests-win:
         requires:
-        - automated-qa-tests-general
+        - qa-tests-general
         <<: *qa-filters
 
-    - automated-qa-tests-osx:
+    - qa-tests-osx:
         requires:
-        - automated-qa-tests-general
+        - qa-tests-general
         <<: *qa-filters
 
     - confirm-manual-qa:
         type: approval
         requires:
-        - automated-qa-tests-win
-        - automated-qa-tests-osx
+        - qa-tests-win
+        - qa-tests-osx
         <<: *qa-filters
     - tag-build:
-        name: tag-build-staging
+        name: tag-staging
         env: staging
         requires:
         - confirm-manual-qa
