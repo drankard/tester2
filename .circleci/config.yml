@@ -110,12 +110,22 @@ jobs:
     - docker-pull
     - deploy-to-kubernetes
 
-  run-automated-qa-tests:
+  run-automated-qa-tests-general:
     <<: *base
     steps:
     - docker-pull
     - deploy-to-kubernetes
     - run: echo "Run Automated QA Tests"
+
+  run-automated-qa-tests-win:
+    <<: *base
+    steps:
+    - run: echo "Run Automated Windows QA Tests"
+
+  run-automated-qa-tests-osx:
+    <<: *base
+    steps:
+    - run: echo "Run Automated OSX QA Tests"
 
   run-stress-tests:
     <<: *base
@@ -166,15 +176,26 @@ workflows:
         - start-qa
         <<: *qa-filters
 
-    - run-automated-qa-tests:
+    - run-automated-qa-tests-general:
         requires:
         - deploy-to-qa
+        <<: *qa-filters
+
+    - run-automated-qa-tests-win:
+        requires:
+        - run-automated-qa-tests-general
+        <<: *qa-filters
+
+    - run-automated-qa-tests-osx:
+        requires:
+        - run-automated-qa-tests-general
         <<: *qa-filters
 
     - confirm-manual-qa-ok:
         type: approval
         requires:
-        - run-automated-qa-tests
+        - run-automated-qa-tests-win
+        - run-automated-qa-tests-osx
         <<: *qa-filters
     - tag-build:
         name: tag-build-staging
