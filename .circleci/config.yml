@@ -192,7 +192,7 @@ workflows:
         - qa-tests-general
         <<: *qa-filters
 
-    - confirm-manual-qa:
+    - confirm-qa:
         type: approval
         requires:
         - qa-tests-win
@@ -202,7 +202,7 @@ workflows:
         name: tag-staging
         env: staging
         requires:
-        - confirm-manual-qa
+        - confirm-qa
         <<: *qa-filters
 
 
