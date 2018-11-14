@@ -28,23 +28,23 @@ references:
         git config --global user.name CircleCI
         git config --global pager.tag false
 
-executors:
-  python-executor:
-    docker:
-    - image: circleci/python:3.6
-
 commands:
+
   docker-pull:
     parameters:
       image:
         type: string
-        default: "Hello World"
+        default: "Error No image paramater provided"
     steps:
     - run: echo "Pulling docker image << parameters.image >>"
 
   deploy-to-kubernetes:
+    parameters:
+      image:
+        type: string
+        default: "Error No image paramater provided"
     steps:
-    - run: echo "Deploying ${VERSION} to Kubernetes"
+    - run: echo "Deploying << parameters.image >> to Kubernetes"
 
 jobs:
   start-ci:
@@ -115,8 +115,13 @@ jobs:
       env:
         type: string
     steps:
-    - docker-pull
-    - deploy-to-kubernetes
+    - attach_workspace:
+        at: .
+    - docker-pull:
+        image: "my-image-$(cat VERSION)"
+    - deploy-to-kubernetes:
+        image: "my-image-$(cat VERSION)"
+
 
   qa-tests-general:
     <<: *base
